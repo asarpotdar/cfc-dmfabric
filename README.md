@@ -25,6 +25,13 @@ The DMFabric network provides one platform to connect the residents, service pro
 
 # Payment Wallet
 Once registered, system will activate a payment wallet for affected residents/victims. The fund providers and Government & Banks can add money to these wallets directly to provide more transparency in fund distribution. Then residents can use this wallet money to avail any paid services as and when needed. 
+
+# Application video demo link -
+
+https://www.youtube.com/watch?v=1fB7Y_VjOZ0
+
+
+
 This again provides an alternative and efficient way for payment during crisis situations instead of using cash or cards. A payment mechanism using VPA (Virtual Payment Address), UPI (Unified Payments Interface) and MPIN can be used for these payment wallets which will be convenient and secure.
 
 # Single View 
