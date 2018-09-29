@@ -1,0 +1,30 @@
+/**
+ * New model file for DMFabric
+ */
+
+namespace org.dmfabric.bank
+
+import composer.base.Address
+import org.dmfabric.res.PaymentWallet
+
+/**
+* A Participant Bank for fund distribution
+*/
+participant Bank identified by bankId {
+  o String bankId
+  o String accountNo optional
+  o String bankName optional
+  o String branchName optional
+  o String ifscCode optional
+  o Address address optional
+}
+
+/**
+ * Transaction to distribute funds to Residents' wallet
+ */
+transaction distributeFundsViaBank {
+  o String distributionId
+  o Double fundAmount optional
+  --> PaymentWallet wallet
+  --> Bank bank
+}

@@ -1,0 +1,37 @@
+/**
+ * New model file for DMFabric
+ */
+
+namespace org.dmfabric.gov
+
+import org.dmfabric.bank.Bank
+import org.dmfabric.res.PaymentWallet
+
+/**
+* A Government Regulating & Managing DMFabric
+*/
+participant Government identified by departmentId {
+  o String departmentId
+  o String governmentDept optional
+  o String country optional
+}
+
+/**
+ * Transaction to distribute funds to Residents' wallet
+ */
+transaction DistributeFunds {
+  o String distributionId
+  o Double fundAmount optional
+  --> PaymentWallet wallet
+  --> Government governmentDept optional
+}
+
+/**
+* distribute funds Event
+*/
+event DistributeFundsEvent {
+  o Double fundAmount optional
+  o PaymentWallet wallet
+  o Government governmentDept
+}
+

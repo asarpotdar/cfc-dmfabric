@@ -1,0 +1,78 @@
+/**
+ * New model file for DMFabric
+ */
+
+namespace org.dmfabric.res
+
+import composer.base.Person
+import composer.base.Address
+import composer.base.ServiceDetails
+import composer.base.ServiceReqStatus
+import org.dmfabric.prov.ServiceProvider
+import composer.base.WalletState
+
+/**
+* A Resident using DMFabric
+*/
+participant Resident identified by residentId extends Person {
+  o String residentId
+  o String aadhaarNumber optional
+  o String profession optional
+  o Person familyMembers optional
+  o String walletId optional
+}
+
+/**
+ * An asset for a payment wallet
+ */
+asset PaymentWallet identified by walletId {
+  o String walletId
+  o String VPA optional
+  o WalletState state optional
+  o Double balance optional
+  --> Resident walletOwner
+}
+
+/**
+ * A service to be availed by residents or to be provided by 
+ * Service Providers.
+ */
+asset Service identified by serviceId {
+  o String serviceId
+  o ServiceDetails serviceDetails
+  o ServiceReqStatus serviceReqStatus
+  --> Resident requester optional
+  --> ServiceProvider serviceProvider optional
+}
+
+/**
+ * Transaction for creating Service Request
+ */
+transaction CreateServiceReq {
+  o String serviceId
+  o ServiceDetails serviceDetails optional
+  --> Resident requester
+}
+
+
+event CreateServiceReqEvent {
+  o String serviceId
+  o ServiceDetails serviceDetails
+}
+
+/**
+ * Transaction to update service request
+ */
+transaction PayFromWalletforService {
+  //o ServiceDetails serviceDetails optional
+  o ServiceReqStatus serviceReqStatus optional
+  --> Service service
+}
+
+/**
+* Update Service Event
+*/
+event UpdateServiceReqEvent {
+  o ServiceReqStatus serviceReqStatus 
+  o Service service
+}

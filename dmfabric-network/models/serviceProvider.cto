@@ -1,0 +1,101 @@
+/**
+ * New model file for DMFabric
+ */
+
+namespace org.dmfabric.prov
+
+import composer.base.ContactDetails
+import composer.base.ServiceType
+import org.dmfabric.res.Resident
+import composer.base.ServiceDetails
+import composer.base.BankDetails
+import composer.base.ServiceReqStatus
+import org.dmfabric.res.Service
+
+/**
+* A Service Provider
+*/
+abstract participant ServiceProvider {
+  o ServiceType serviceType optional
+  o String registrationNo optional
+  o String registeredName optional
+  o BankDetails bankDetails optional
+  o ContactDetails contactDetails optional
+}
+
+/**
+* A FoodSupplier
+*/
+participant FoodSupplier identified by foodSupplierId extends ServiceProvider {
+  o String foodSupplierId
+}
+
+/**
+* A Transporter
+*/
+participant Transporter identified by transporterId extends ServiceProvider {
+  o String transporterId
+}
+
+/**
+* A Medical Supplier
+*/
+participant MedicalSupplier identified by medicalSupplierId extends ServiceProvider {
+  o String medicalSupplierId
+}
+
+/**
+* A Medical Service Provider
+*/
+participant MedicalServiceProvider identified by medicalServiceProvider extends ServiceProvider {
+  o String medicalServiceProvider
+}
+
+/**
+* A Volunteer Service Provider
+*/
+abstract participant Volunteer extends Resident {
+  o ServiceType serviceType optional
+  --> Resident volunteer
+}
+
+/**
+* A Volunteer as Shelter Provider 
+*/
+participant ShelterProvider identified by shelterProviderId extends Volunteer {
+  o String shelterProviderId
+}
+
+/**
+ * Transaction to publish service request
+ */
+transaction PublishService {
+  o String serviceId
+  o ServiceDetails serviceDetails optional
+  o ServiceReqStatus serviceReqStatus optional
+  --> ServiceProvider serviceProvider
+}
+
+/**
+* Publish Service Event
+*/
+event PublishServiceEvent {
+  o String serviceId
+  o ServiceDetails serviceDetails
+}
+
+/**
+ * Transaction to pick up service request
+ */
+transaction PickupServiceReq {
+  --> Service service
+  --> ServiceProvider serviceProvider
+}
+
+/**
+* Pick Up Service Event
+*/
+event PickupServiceReqEvent {
+  o ServiceReqStatus serviceReqStatus 
+  o Service service
+}
